@@ -2,6 +2,7 @@
 
 const { Router } = require('express');
 const router = Router();
+const Subject = require('../models/subjects');
 
 router.get('/', (req, res) => {
   res.render('add', {
@@ -9,8 +10,11 @@ router.get('/', (req, res) => {
   })
 });
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
   console.log(req.body);
+  const subject = new Subject(req.body.name, req.body.teacher, req.body.shortName);
+  await subject.add();
+  res.redirect('/subjects');
 });
 
 module.exports = router;
