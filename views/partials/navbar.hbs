@@ -2,9 +2,23 @@
   <div class="nav-wrapper">
     <a href="/" class="brand-logo">STUDYH</a>
     <ul id="nav-mobile" class="right hide-on-med-and-down">
-      <li><a href="/subjects">Subjects</a></li>
-      <li><a href="/add">Add</a></li>
-      <li><a href="/">My subject</a></li>
+      {{#if isSubjects}}
+        <li class="active"><a href="/subjects">Subjects</a></li>
+      {{else}}
+        <li><a href="/subjects">Subjects</a></li>
+      {{/if}}
+
+      {{#if isAdd}}
+        <li class="active"><a href="/add">Add</a></li>
+      {{else}}
+        <li><a href="/add">Add</a></li>
+      {{/if}}
+
+      {{#if isList}}
+        <li class="active"><a href="/">My subject</a></li>
+      {{else}}
+        <li><a href="/">My subject</a></li>
+      {{/if}}
     </ul>
   </div>
 </nav>

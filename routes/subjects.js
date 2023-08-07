@@ -8,6 +8,7 @@ router.get('/', async (req, res) => {
   const subjects = await Subject.getAll();
   res.render('subjects', {
     title: 'Subjects page',
+    isSubjects: true,
     subjects
   });
 });

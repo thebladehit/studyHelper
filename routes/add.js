@@ -7,6 +7,7 @@ const Subject = require('../models/subjects');
 router.get('/', (req, res) => {
   res.render('add', {
     title: 'Add page',
+    isAdd: true
   })
 });
 
