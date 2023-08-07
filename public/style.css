@@ -2,3 +2,7 @@
   padding: 0 2rem;
   background-color: rgb(99, 23, 165);
 }
+
+.card-image {
+  width: 100%;
+}
