@@ -2,6 +2,7 @@
 
 const express = require('express');
 const exhbs = require('express-handlebars');
+const path = require('node:path');
 
 const homeRoutes = require('./routes/home');
 
@@ -17,6 +18,7 @@ app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
 app.set('views', 'views');
 
+app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', homeRoutes);
 
 app.listen(PORT, () => {
