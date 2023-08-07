@@ -21,8 +21,8 @@ class Subject {
     };
   }
 
-  add() {
-    const subjects = Subject.getAll();
+  async add() {
+    const subjects = await Subject.getAll();
     subjects.push(this.toJSON());
     
     return new Promise((resolve, reject) => {
