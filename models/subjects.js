@@ -32,6 +32,11 @@ class Subject {
       })
     });
   }
+  
+  static async getById(id) {
+    const subjects = await Subject.getAll();
+    return subjects.find(x => x.id === id);
+  }
 
   static getAll() {
     return new Promise((resolve, reject) => {

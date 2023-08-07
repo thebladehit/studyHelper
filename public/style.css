@@ -3,6 +3,17 @@
   background-color: rgb(99, 23, 165);
 }
 
-.card-image {
+.subject {
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.subject p {
+  font-size: 24px;
+}
+
+.subject img {
+  width: 33%;
 }

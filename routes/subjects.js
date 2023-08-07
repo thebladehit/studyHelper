@@ -12,4 +12,12 @@ router.get('/', async (req, res) => {
   });
 });
 
+router.get('/:id', async (req, res) => {
+  const subject = await Subject.getById(req.params.id);
+  res.render('subject', {
+    title: `${subject.shortName}`,
+    subject
+  });
+});
+
 module.exports = router;
