@@ -5,6 +5,7 @@ const exhbs = require('express-handlebars');
 const path = require('node:path');
 
 const homeRoutes = require('./routes/home');
+const addRoutes = require('./routes/add');
 
 const PORT = process.env.PORT || 3001;
 const hbs = exhbs.create({
@@ -19,7 +20,9 @@ app.set('view engine', 'hbs');
 app.set('views', 'views');
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.urlencoded({ extended: true }));
 app.use('/', homeRoutes);
+app.use('/add', addRoutes);
 
 app.listen(PORT, () => {
   console.log(`Working at ${PORT}`);
