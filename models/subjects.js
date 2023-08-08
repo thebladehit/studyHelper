@@ -32,6 +32,19 @@ class Subject {
       })
     });
   }
+
+  static async update(subject) {
+    const subjects = await Subject.getAll();
+    const idx = subjects.findIndex(x => x.id === subject.id);
+    subjects[idx] = subject;
+
+    return new Promise((resolve, reject) => {
+      fs.writeFile(path.join(__dirname, '..', 'data', 'subjects.json'), JSON.stringify(subjects), (err) => {
+        if (err) reject(err);
+        resolve();
+      })
+    });
+  }
   
   static async getById(id) {
     const subjects = await Subject.getAll();
