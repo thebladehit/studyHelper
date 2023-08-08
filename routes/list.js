@@ -20,4 +20,9 @@ router.post('/add', async (req, res) => {
   res.redirect('/list');
 });
 
+router.delete('/delete/:id', async (req, res) => {
+  const newList = await List.delete(req.params.id);
+  res.end(JSON.stringify(newList));
+});
+
 module.exports = router;

@@ -27,6 +27,18 @@ class List {
     }
     return;    
   }
+
+  static async delete(id) {
+    const list = await List.getAll();
+    const newList = list.filter(x => x.id !== id);
+
+    return new Promise((resolve, reject) => {
+      fs.writeFile(path.join(__dirname, '..', 'data', 'list.json'), JSON.stringify(newList), (err) => {
+        if (err) reject(err);
+        resolve(newList);
+      });
+    });
+  }
 }
 
 module.exports = List;
