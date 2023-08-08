@@ -8,6 +8,7 @@ const homeRoutes = require('./routes/home');
 const addRoutes = require('./routes/add');
 const subjectsRoutes = require('./routes/subjects');
 const editRoutes = require('./routes/edit');
+const listRoutes = require('./routes/list');
 
 const PORT = process.env.PORT || 3001;
 const hbs = exhbs.create({
@@ -27,6 +28,7 @@ app.use('/', homeRoutes);
 app.use('/add', addRoutes);
 app.use('/subjects', subjectsRoutes);
 app.use('/edit', editRoutes);
+app.use('/list', listRoutes);
 
 app.listen(PORT, () => {
   console.log(`Working at ${PORT}`);

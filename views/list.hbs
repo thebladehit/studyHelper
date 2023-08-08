@@ -1,0 +1,28 @@
+<h1>Your subject</h1>
+
+<div id="card">
+{{#if list.length}}
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Teacher</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each list}}
+        <tr>
+          <td>{{name}}</td>
+          <td>{{teacher}}</td>
+          <td>
+            <button class="btn btn-small js-remove" data-id="{{id}}">Delete</button>
+          </td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+{{else}}
+  <p>List is empty</p>
+{{/if}}
+</div>
