@@ -5,7 +5,8 @@ require('dotenv/config');
 const express = require('express');
 const exhbs = require('express-handlebars');
 const path = require('node:path');
-const { PORT } = require('./config/config');
+const mongoose = require('mongoose');
+const { PORT, URL } = require('./config/config');
 
 const homeRoutes = require('./routes/home');
 const addRoutes = require('./routes/add');
@@ -15,7 +16,11 @@ const listRoutes = require('./routes/list');
 
 const hbs = exhbs.create({
   defaultLayout: 'main',
-  extname: 'hbs'
+  extname: 'hbs',
+  runtimeOptions: {
+    allowProtoPropertiesByDefault: true,
+    allowProtoMethodsByDefault: true,
+  } 
 });
 
 const app = express();
@@ -32,6 +37,15 @@ app.use('/subjects', subjectsRoutes);
 app.use('/edit', editRoutes);
 app.use('/list', listRoutes);
 
-app.listen(PORT, () => {
-  console.log(`Working at ${PORT}`);
-});
+async function start() {
+  try {
+    await mongoose.connect(URL, { useNewUrlParser: true });
+    app.listen(PORT, () => {
+      console.log(`Working at ${PORT}`);
+    });
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+start();
