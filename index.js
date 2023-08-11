@@ -1,8 +1,11 @@
 'use strict';
 
+require('dotenv/config');
+
 const express = require('express');
 const exhbs = require('express-handlebars');
 const path = require('node:path');
+const { PORT } = require('./config/config');
 
 const homeRoutes = require('./routes/home');
 const addRoutes = require('./routes/add');
@@ -10,7 +13,6 @@ const subjectsRoutes = require('./routes/subjects');
 const editRoutes = require('./routes/edit');
 const listRoutes = require('./routes/list');
 
-const PORT = process.env.PORT || 3001;
 const hbs = exhbs.create({
   defaultLayout: 'main',
   extname: 'hbs'
