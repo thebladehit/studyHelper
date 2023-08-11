@@ -21,5 +21,10 @@
 
   <input type="text" hidden name="id" value="{{subject.id}}">
 
-  <button class="btn btn-primary">Save</button>
+  <button class="btn btn-primary" type="submit">Save</button>
+</form>
+
+<form action="/edit/remove" method="POST" class="delete-form">
+  <input type="hidden" name="id" value="{{subject.id}}">
+  <button class="btn red" type="submit">Delete subject</button>
 </form>

@@ -2,11 +2,11 @@
 
 const { Router } = require('express');
 const router = Router();
-const List = require('../models/list');
+// const List = require('../models/list');
 const Subject = require('../models/subjects');
 
 router.get('/', async (req, res) => {
-  const list = await List.getAll();
+  // const list = await List.getAll();
   res.render('list', {
     title: 'Your subjecs',
     list,
