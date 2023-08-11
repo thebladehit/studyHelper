@@ -16,12 +16,21 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.post('/:id', async (req, res) => {
+router.post('/', async (req, res) => {
   try {
     const { id } = req.body;
     delete req.body.id;
     await Subject.findByIdAndUpdate(id, req.body);
     res.redirect(`/subjects/${id}`);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+router.post('/remove', async (req, res) => {
+  try {
+    await Subject.deleteOne({ _id: req.body.id });
+    res.redirect('/subjects');
   } catch (err) {
     console.log(err);
   }

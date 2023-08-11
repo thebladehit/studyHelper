@@ -1,6 +1,6 @@
 <h1>Edit: {{subject.name}}</h1>
 
-<form action="/edit/{{subject.id}}" method="POST">
+<form action="/edit" method="POST">
   <div class="input-field">
     <input id="name" name="name" type="text" class="validate" value="{{subject.name}}" required>
     <label for="name">Name of subject</label>
@@ -26,5 +26,5 @@
 
 <form action="/edit/remove" method="POST" class="delete-form">
   <input type="hidden" name="id" value="{{subject.id}}">
-  <button class="btn red" type="submit">Delete subject</button>
+  <button class="btn red">Delete subject</button>
 </form>
