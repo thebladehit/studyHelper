@@ -12,10 +12,18 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-  console.log(req.body);
-  const subject = new Subject(req.body.name, req.body.teacher, req.body.shortName);
-  await subject.add();
-  res.redirect('/subjects');
+  const subject = new Subject({
+    name: req.body.name,
+    teacher: req.body.teacher,
+    shortName: req.body.shortName
+  });
+
+  try {
+    await subject.save();
+    res.redirect('/subjects');
+  } catch (err) {
+    console.log(err)
+  }
 });
 
 module.exports = router;
