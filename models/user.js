@@ -24,4 +24,17 @@ const userSchema = new Schema({
   }
 });
 
+userSchema.methods.addToList = function(subject) {
+  for (const item of this.list.items) {
+    if (item.subjectId.toString() === subject._id.toString()) return;
+  }
+  this.list.items.push({ subjectId: subject._id });
+  return this.save();
+};
+
+userSchema.methods.removeFromList = function(id) {
+  this.list.items = this.list.items.filter(item => item.subjectId.toString() !== id.toString());
+  return this.save();
+};
+
 module.exports = model('User', userSchema);
