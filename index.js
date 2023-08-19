@@ -7,6 +7,7 @@ const exhbs = require('express-handlebars');
 const path = require('node:path');
 const mongoose = require('mongoose');
 const session = require('express-session');
+const MongoStore = require('connect-mongodb-session')(session);
 const { PORT, URL, EMAIL, NAME } = require('./config/config');
 const User = require('./models/user');
 const varMiddleware = require('./middleware/variables');
@@ -27,6 +28,11 @@ const hbs = exhbs.create({
   } 
 });
 
+const store = new MongoStore({
+  collection: 'sessions',
+  uri: URL
+});
+
 const app = express();
 
 app.engine('hbs', hbs.engine);
@@ -37,7 +43,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(session({
   secret: 'some key',
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
+  store
 }));
 app.use(varMiddleware);
 app.use('/', homeRoutes);
