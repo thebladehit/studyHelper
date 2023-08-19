@@ -2,6 +2,7 @@
 
 const { Router } = require('express');
 const router = Router();
+const User = require('../models/user');
 
 router.get('/login', (req, res) => {
   res.render('auth/login', {
@@ -16,9 +17,14 @@ router.get('/logout', (req, res) => {
   });
 });
 
-router.post('/login', (req, res) => {
+router.post('/login', async (req, res) => {
+  const user = await User.findById('64d5fc8f9dc7c357c28dc748');
+  req.session.user = user;
   req.session.isAuthenticated = true;
-  res.redirect('/subjects');
+  req.session.save(err => {
+    if (err) throw err;
+    res.redirect('/subjects');
+  });
 });
 
 module.exports = router;

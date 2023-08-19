@@ -32,16 +32,6 @@ const app = express();
 app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
 app.set('views', 'views');
-
-app.use(async (req, res, next) => {
-  try {
-    const user = await User.findById('64d5fc8f9dc7c357c28dc748');
-    req.user = user;
-    next();
-  } catch (err) {
-    console.log(err);
-  }
-});
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(session({
@@ -61,14 +51,6 @@ async function start() {
   try {
     await mongoose.connect(URL, { useNewUrlParser: true });
     const candidate = await User.findOne();
-    if (!candidate) {
-      const user = new User({
-        email: EMAIL,
-        name: NAME,
-        list: {items: []}
-      });
-      await user.save();
-    }
     app.listen(PORT, () => {
       console.log(`Working at ${PORT}`);
     });
