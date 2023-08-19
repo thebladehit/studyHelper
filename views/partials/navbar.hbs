@@ -8,22 +8,26 @@
         <li><a href="/subjects">Subjects</a></li>
       {{/if}}
 
-      {{#if isAdd}}
-        <li class="active"><a href="/add">Add</a></li>
-      {{else}}
-        <li><a href="/add">Add</a></li>
-      {{/if}}
+      {{#if isAuth}}
+        {{#if isAdd}}
+          <li class="active"><a href="/add">Add</a></li>
+        {{else}}
+          <li><a href="/add">Add</a></li>
+        {{/if}}
 
-      {{#if isList}}
-        <li class="active"><a href="/list">My subjects</a></li>
-      {{else}}
-        <li><a href="/list">My subjects</a></li>
-      {{/if}}
+        {{#if isList}}
+          <li class="active"><a href="/list">My subjects</a></li>
+        {{else}}
+          <li><a href="/list">My subjects</a></li>
+        {{/if}}
 
-      {{#if isLogin}}
-        <li class="active"><a href="/auth/login">Log in</a></li>
+        <li><a href="/auth/logout">Log out</a></li>
       {{else}}
-        <li><a href="/auth/login">Log in</a></li>
+        {{#if isLogin}}
+          <li class="active"><a href="/auth/login">Log in</a></li>
+        {{else}}
+          <li><a href="/auth/login">Log in</a></li>
+        {{/if}}
       {{/if}}
     </ul>
   </div>

@@ -10,4 +10,9 @@ router.get('/login', (req, res) => {
   });
 });
 
+router.post('/login', (req, res) => {
+  req.session.isAuthenticated = true;
+  res.redirect('/subjects');
+});
+
 module.exports = router;
