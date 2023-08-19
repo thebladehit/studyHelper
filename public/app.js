@@ -28,3 +28,5 @@ if (list) {
     }
   });
 }
+
+M.Tabs.init(document.querySelectorAll('.tabs'));

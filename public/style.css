@@ -35,3 +35,24 @@
 .delete-form {
   margin-top: 2rem;
 }
+
+.auth {
+  padding-top: 1rem;
+}
+
+.tabs .tab a {
+  color: #7820eb;
+}
+
+.tabs .tab a:hover, .tabs .tab a.active {
+  background: rgba(192, 178, 246, 0.2);
+  color: #7820eb;
+}
+
+.tabs .tab a:focus, .tabs .tab a:focus.active {
+  background: rgba(192, 178, 246, 0.2);
+}
+
+.tabs .indicator {
+  background-color: #7820eb;
+}
