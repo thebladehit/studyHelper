@@ -14,6 +14,7 @@ const addRoutes = require('./routes/add');
 const subjectsRoutes = require('./routes/subjects');
 const editRoutes = require('./routes/edit');
 const listRoutes = require('./routes/list');
+const authRoutes = require('./routes/auth');
 
 const hbs = exhbs.create({
   defaultLayout: 'main',
@@ -46,6 +47,7 @@ app.use('/add', addRoutes);
 app.use('/subjects', subjectsRoutes);
 app.use('/edit', editRoutes);
 app.use('/list', listRoutes);
+app.use('/auth', authRoutes);
 
 async function start() {
   try {

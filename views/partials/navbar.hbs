@@ -19,6 +19,12 @@
       {{else}}
         <li><a href="/list">My subjects</a></li>
       {{/if}}
+
+      {{#if isLogin}}
+        <li class="active"><a href="/auth/login">Log in</a></li>
+      {{else}}
+        <li><a href="/auth/login">Log in</a></li>
+      {{/if}}
     </ul>
   </div>
 </nav>
