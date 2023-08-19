@@ -14,11 +14,13 @@
         </div>
         <div class="card-action actions">
           <a href="/subjects/{{id}}" class="btn btn-primary">Open</a>
-          <form action="/list/add" method="POST">
+         {{#if @root.isAuth}}
+           <form action="/list/add" method="POST">
             <input type="hidden" name="id" value="{{id}}">
             <button type="submit" class="btn btn-primary">Add</button>
           </form>
           <a href="/edit/{{id}}" class="btn btn-primary">Edit</a>
+         {{/if}}
         </div>
       </div>
     </div>
