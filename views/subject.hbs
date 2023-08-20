@@ -7,6 +7,7 @@
       <a href="/edit/{{subject.id}}" class="btn btn-primary">Edit</a>
       <form action="/list/add" method="POST">
         <input type="hidden" name="id" value="{{subject.id}}">
+        <input type="hidden" name="_csrf" value="{{csrf}}">
         <button type="submit" class="btn btn-primary">Add</button>
       </form>
   </div>

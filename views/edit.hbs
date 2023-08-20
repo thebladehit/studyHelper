@@ -21,10 +21,13 @@
 
   <input type="text" hidden name="id" value="{{subject.id}}">
 
+  <input type="hidden" name="_csrf" value="{{csrf}}">
+
   <button class="btn btn-primary" type="submit">Save</button>
 </form>
 
 <form action="/edit/remove" method="POST" class="delete-form">
   <input type="hidden" name="id" value="{{subject.id}}">
+  <input type="hidden" name="_csrf" value="{{csrf}}">
   <button class="btn red">Delete subject</button>
 </form>

@@ -31,7 +31,7 @@ router.post('/add', async (req, res) => {
 router.delete('/delete/:id', async (req, res) => {
   await req.user.removeFromList(req.params.id);
   const user = await req.user.populate('list.items.subjectId');
-  res.end(JSON.stringify(mapList(user.list)));
+  res.end(JSON.stringify({list: mapList(user.list), csrfToken: res.locals.csrf}));
 });
 
 module.exports = router;

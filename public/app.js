@@ -4,18 +4,25 @@ if (list) {
   list.addEventListener('click', (event) => {
     if (event.target.classList.contains('js-remove')) {
       const id = event.target.dataset.id;
+      const csrf = event.target.dataset.csrf;
 
-      fetch('list/delete/' + id, { method: 'delete' })
+      fetch('list/delete/' + id, { 
+        method: 'delete',
+        headers: {
+          'X-XSRF-TOKEN': csrf
+        }
+      })
         .then(res => res.json())
         .then(newList => {
-          if (newList.length) {
-            const html = newList.map(c => {
+          if (newList.list.length) {
+            const newToken = newList.csrfToken;
+            const html = newList.list.map(c => {
               return `
               <tr>
                 <td>${c.name}</td>
                 <td>${c.teacher}</td>
                 <td>
-                  <button class="btn btn-small js-remove" data-id="${c.id}">Delete</button>
+                  <button class="btn btn-small js-remove" data-id="${c.id}" data-csrf="${newToken}">Delete</button>
                 </td>
               </tr>
               `

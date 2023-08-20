@@ -8,6 +8,7 @@ const path = require('node:path');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoStore = require('connect-mongodb-session')(session);
+const csrf = require('csurf');
 const { PORT, URL, EMAIL, NAME } = require('./config/config');
 const User = require('./models/user');
 const varMiddleware = require('./middleware/variables');
@@ -45,8 +46,9 @@ app.use(session({
   secret: 'some key',
   resave: false,
   saveUninitialized: false,
-  store
+  store,
 }));
+app.use(csrf());
 app.use(varMiddleware);
 app.use(userMiddleware);
 app.use('/', homeRoutes);
