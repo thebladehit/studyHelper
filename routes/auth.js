@@ -8,7 +8,9 @@ const bcrypt = require('bcryptjs');
 router.get('/login', (req, res) => {
   res.render('auth/login', {
     title: 'Login',
-    isLogin: true
+    isLogin: true,
+    loginError: req.flash('loginError'),
+    registerError: req.flash('registerError')
   });
 });
 
@@ -29,12 +31,15 @@ router.post('/login', async (req, res) => {
         req.session.isAuthenticated = true;
         req.session.save(err => {
           if (err) throw err;
+          req.flash('loginError', 'Something went wrong');      
           res.redirect('/subjects');
         });
       } else {
+        req.flash('loginError', 'Incorrect password');
         res.redirect('/auth/login#login');
       }
     } else {
+      req.flash('loginError', 'No such user');
       res.redirect('/auth/login#login');
     }
   } catch (err) {
@@ -47,12 +52,18 @@ router.post('/register', async (req, res) => {
     const { email, name, password, confirm } = req.body;
     const candidate = await User.findOne({ email });
     if (candidate) {
+      req.flash('registerError', 'This email is not available');
       res.redirect('/auth/login#register');
     } else {
-      const hashPassword = await bcrypt.hash(password, 10);
-      const user = new User({ email, name, password: hashPassword, list: {items: []}});
-      await user.save();
-      res.redirect('/auth/login#login');
+      if (password !== confirm) {
+        req.flash('registerError', 'Passwords are not same');
+        res.redirect('/auth/login#register');
+      } else {
+        const hashPassword = await bcrypt.hash(password, 10);
+        const user = new User({ email, name, password: hashPassword, list: {items: []}});
+        await user.save();
+        res.redirect('/auth/login#login');
+      }
     }
   } catch (err) {
     console.log(err); 
