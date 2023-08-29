@@ -4,6 +4,19 @@ const { Router } = require('express');
 const router = Router();
 const User = require('../models/user');
 const bcrypt = require('bcryptjs');
+const crypto = require('node:crypto');
+const nodemailer = require('nodemailer');
+const { EMAIL, PASS } = require('../config/config');
+const regEmail = require('../emails/registration');
+
+const transpoerter = nodemailer.createTransport({
+  host: 'smtp.ukr.net',
+  port: 465,
+  auth: {
+    user: EMAIL,
+    pass: PASS,
+  }
+});
 
 router.get('/login', (req, res) => {
   res.render('auth/login', {
@@ -63,11 +76,13 @@ router.post('/register', async (req, res) => {
         const user = new User({ email, name, password: hashPassword, list: {items: []}});
         await user.save();
         res.redirect('/auth/login#login');
+        await transpoerter.sendMail(regEmail(email));
       }
     }
   } catch (err) {
     console.log(err); 
   }
 });
+
 
 module.exports = router;
