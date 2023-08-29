@@ -3,15 +3,16 @@
 const { Router } = require('express');
 const router = Router();
 const Subject = require('../models/subjects');
+const auth = require('../middleware/auth');
 
-router.get('/', (req, res) => {
+router.get('/', auth, (req, res) => {
   res.render('add', {
     title: 'Add page',
     isAdd: true
   })
 });
 
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
   const subject = new Subject({
     name: req.body.name,
     teacher: req.body.teacher,

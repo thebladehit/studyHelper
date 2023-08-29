@@ -3,8 +3,9 @@
 const { Router } = require('express');
 const router = Router();
 const Subject = require('../models/subjects');
+const auth = require('../middleware/auth');
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', auth, async (req, res) => {
   try {
     const subject = await Subject.findById(req.params.id);
     res.render('edit', {
@@ -16,7 +17,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
   try {
     const { id } = req.body;
     delete req.body.id;
@@ -27,7 +28,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.post('/remove', async (req, res) => {
+router.post('/remove', auth, async (req, res) => {
   try {
     await Subject.deleteOne({ _id: req.body.id });
     res.redirect('/subjects');

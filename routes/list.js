@@ -3,6 +3,7 @@
 const { Router } = require('express');
 const router = Router();
 const Subject = require('../models/subjects');
+const auth = require('../middleware/auth');
 
 const mapList = (list) => {
   return list.items.map(item => ({
@@ -13,7 +14,7 @@ const mapList = (list) => {
   }));
 };
 
-router.get('/', async (req, res) => {
+router.get('/', auth, async (req, res) => {
   const user = await req.user.populate('list.items.subjectId');
   res.render('list', {
     title: 'Your subjecs',
@@ -22,13 +23,13 @@ router.get('/', async (req, res) => {
   });
 });
 
-router.post('/add', async (req, res) => {
+router.post('/add', auth, async (req, res) => {
   const subject = await Subject.findById(req.body.id);
   await req.user.addToList(subject);
   res.redirect('/list');
 });
 
-router.delete('/delete/:id', async (req, res) => {
+router.delete('/delete/:id', auth, async (req, res) => {
   await req.user.removeFromList(req.params.id);
   const user = await req.user.populate('list.items.subjectId');
   res.end(JSON.stringify({list: mapList(user.list), csrfToken: res.locals.csrf}));
