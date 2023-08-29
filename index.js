@@ -10,7 +10,7 @@ const session = require('express-session');
 const MongoStore = require('connect-mongodb-session')(session);
 const csrf = require('csurf');
 const flash = require('connect-flash');
-const { PORT, URL, EMAIL, NAME } = require('./config/config');
+const { PORT, URL, SECRET_KEY } = require('./config/config');
 const User = require('./models/user');
 const varMiddleware = require('./middleware/variables');
 const userMiddleware = require('./middleware/user');
@@ -44,7 +44,7 @@ app.set('views', 'views');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(session({
-  secret: 'some key',
+  secret: SECRET_KEY,
   resave: false,
   saveUninitialized: false,
   store,
