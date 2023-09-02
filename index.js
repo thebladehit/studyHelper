@@ -14,6 +14,7 @@ const { PORT, URL, SECRET_KEY } = require('./config/config');
 const User = require('./models/user');
 const varMiddleware = require('./middleware/variables');
 const userMiddleware = require('./middleware/user');
+const errorHandler = require('./middleware/error');
 
 const homeRoutes = require('./routes/home');
 const addRoutes = require('./routes/add');
@@ -59,6 +60,7 @@ app.use('/subjects', subjectsRoutes);
 app.use('/edit', editRoutes);
 app.use('/list', listRoutes);
 app.use('/auth', authRoutes);
+app.use(errorHandler);
 
 async function start() {
   try {
