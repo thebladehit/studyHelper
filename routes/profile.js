@@ -1,12 +1,14 @@
 'use strict';
 
 const { Router } = require('express');
+const auth = require('../middleware/auth');
 const router = Router();
 
-router.get('/', (req, res) => {
+router.get('/', auth, (req, res) => {
   res.render('profile', {
     title: 'Profile',
-    isProfile: true
+    isProfile: true,
+    user: req.user.toObject()
   });
 });
 
