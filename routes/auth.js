@@ -26,7 +26,11 @@ router.get('/login', (req, res) => {
     title: 'Login',
     isLogin: true,
     loginError: req.flash('loginError'),
-    registerError: req.flash('registerError')
+    registerError: req.flash('registerError'),
+    email: req.flash('email'),
+    name: req.flash('name'),
+    password: req.flash('password'),
+    confirm: req.flash('confirm')
   });
 });
 
@@ -59,10 +63,13 @@ router.post('/login', loginValidators, async (req, res) => {
 
 router.post('/register', registerValidators, async (req, res) => {
   try {
-    const { email, name, password } = req.body;
-
+    const { email, name, password, confirm } = req.body;
     const errors = validationResult(req);
     if(!errors.isEmpty()) {
+      req.flash('email', email);
+      req.flash('name', name);
+      req.flash('password', password);
+      req.flash('confirm', confirm);
       req.flash('registerError', errors.array()[0].msg);
       return res.status(422).redirect('/auth/login#register');
     }
