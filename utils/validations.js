@@ -38,3 +38,9 @@ exports.loginValidators = [
     return true;
   })
 ];
+
+exports.subjectValidation = [
+  body('name', 'Name must have at least 6 symbols').isLength({ min: 6 }).trim(),
+  body('teacher', 'Teacher must have at least 4 symbols').isLength({ min: 4 }).trim(),
+  body('shortName', 'Short name must have at least 2 symbols').isLength({ min: 2 }).trim()
+];

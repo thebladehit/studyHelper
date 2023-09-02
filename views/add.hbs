@@ -1,20 +1,24 @@
 <h1>Add new subject</h1>
 
+{{#if error}}
+  <p class="alert">{{error}}</p>
+{{/if}}
+
 <form action="/add" method="POST">
   <div class="input-field">
-    <input id="name" name="name" type="text" class="validate" required>
+    <input id="name" name="name" type="text" class="validate" required value="{{data.name}}">
     <label for="name">Name of subject</label>
     <span class="helper-text" data-error="Write name"></span>
   </div>
 
   <div class="input-field">
-    <input id="teacher" name="teacher" type="text" class="validate" required>
+    <input id="teacher" name="teacher" type="text" class="validate" required value="{{data.teacher}}">
     <label for="teacher">Teacher of course</label>
     <span class="helper-text" data-error="Write teacher"></span>
   </div>
 
   <div class="input-field">
-    <input id="shortName" name="shortName" type="text" class="validate" required>
+    <input id="shortName" name="shortName" type="text" class="validate" required value="{{data.shortName}}">
     <label for="shortName">Short name of course</label>
     <span class="helper-text" data-error="Write short name"></span>
   </div>
