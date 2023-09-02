@@ -44,3 +44,15 @@ exports.subjectValidation = [
   body('teacher', 'Teacher must have at least 4 symbols').isLength({ min: 4 }).trim(),
   body('shortName', 'Short name must have at least 2 symbols').isLength({ min: 2 }).trim()
 ];
+
+exports.resetValidation = [
+  body('email', 'Write correct email').isEmail().custom(async (value, {req}) => {
+    try {
+      const user = await User.findOne({ email: value });
+      if (!user) return Promise.reject('No such email');
+      return true;
+    } catch (err) {
+      console.log(err);
+    }
+  })
+];
