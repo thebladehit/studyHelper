@@ -44,6 +44,7 @@ const app = express();
 app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
 app.set('views', 'views');
+app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(session({
