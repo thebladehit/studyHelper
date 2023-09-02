@@ -8,7 +8,7 @@ const crypto = require('node:crypto');
 const nodemailer = require('nodemailer');
 const { validationResult } = require('express-validator');
 const { EMAIL, PASS } = require('../config/config');
-const { registerValidators, loginValidators, resetValidation } = require('../utils/validations');
+const { registerValidators, loginValidators, resetEmailValidation, resetPassValidation } = require('../utils/validations');
 const regEmail = require('../emails/registration');
 const resetEmail = require('../emails/reset');
 
@@ -91,7 +91,7 @@ router.get('/reset', (req, res) => {
   });
 });
 
-router.post('/reset', resetValidation, (req, res) => {
+router.post('/reset', resetEmailValidation, (req, res) => {
   try {
     const errors = validationResult(req);
     if(!errors.isEmpty()) {
@@ -139,24 +139,20 @@ router.get('/password/:token', async (req, res) => {
   }
 });
 
-router.post('/password', async (req, res) => {
+router.post('/password', resetPassValidation, async (req, res) => {
   try {
-    const user = await User.findOne({
-      _id: req.body.userId,
-      resetToken: req.body.token,
-      resetTokenExp: { $gt: Date.now() }
-    });
-    if (user) {
-      user.password = await bcrypt.hash(req.body.password, 10);
-      user.resetToken = undefined;
-      user.resetTokenExp = undefined;
-      await user.save();
-      res.redirect('/auth/login');
-    } else {
-      req.flash('error', 'The token has expired!');
-      res.redirect('/auth/login');
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      req.flash('error', errors.array()[0].msg);
+      return res.status(422).redirect(`/auth/password/${req.body.token}`);
     }
-    
+
+    const user = await User.findById(req.body.userId);
+    user.password = await bcrypt.hash(req.body.password, 10);
+    user.resetToken = undefined;
+    user.resetTokenExp = undefined;
+    await user.save();
+    res.redirect('/auth/login');
   } catch (err) {
     console.log(err);
   }

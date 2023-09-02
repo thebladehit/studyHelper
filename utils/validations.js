@@ -45,7 +45,7 @@ exports.subjectValidation = [
   body('shortName', 'Short name must have at least 2 symbols').isLength({ min: 2 }).trim()
 ];
 
-exports.resetValidation = [
+exports.resetEmailValidation = [
   body('email', 'Write correct email').isEmail().custom(async (value, {req}) => {
     try {
       const user = await User.findOne({ email: value });
@@ -55,4 +55,16 @@ exports.resetValidation = [
       console.log(err);
     }
   })
+];
+
+exports.resetPassValidation = [
+  body('password', 'Password must have at least 6 symbols').isLength({ min: 6 }).isAlphanumeric().custom(async (value, {req}) => {
+    const user = await User.findOne({
+      _id: req.body.userId,
+      resetToken: req.body.token,
+      resetTokenExp: { $gt: Date.now() }
+    });
+    if (!user) return Promise.reject('The token has expired!');
+    return true;
+  }).trim()
 ];
